@@ -1,4 +1,4 @@
-package com.keithturner1.store;
+package com.keurner1.store;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
