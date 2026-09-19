@@ -1,33 +1,48 @@
 package com.keturner1.store;
 
 
-import com.keturner1.store.notification.NotificationManager;
-import com.keturner1.store.payment.OrderService;
-import com.keturner1.store.payment.PaymentService;
-import org.springframework.boot.SpringApplication;
+import com.keturner1.store.entities.Address;
+import com.keturner1.store.entities.Profile;
+import com.keturner1.store.entities.Tag;
+import com.keturner1.store.entities.User;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
 public class StoreApplication {
 
     public static void main(String[] args) {
-//        SpringApplication.run(StoreApplication.class, args);
+//        ApplicationContext context = SpringApplication.run(StoreApplication.class, args);
 
-        ConfigurableApplicationContext context = SpringApplication.run(StoreApplication.class, args);
-        var orderService = context.getBean(OrderService.class);
-        var orderService2 = context.getBean(OrderService.class);
-//        var orderService = new OrderService(new PayPalPaymentService());
-//        orderService.setPaymentService(new PayPalPaymentService());
-        orderService.placeOrder();
+        var user = User.builder()
+                .name("name")
+                .email("email")
+                .password("password")
+                .build();
 
-        var manager = context.getBean(NotificationManager.class);
-        manager.sendNotification("Test message");
+        var profile = Profile.builder()
+                .bio("bio")
+                .loyaltyPoints(0L)
+                .phoneNumber("phone number")
+                .build();
 
-        context.getBean(HeavyResource.class);
+        user.setProfile(profile);
+        profile.setUser(user);
 
-        context.close();
+        System.out.println(user);
+
+//        ConfigurableApplicationContext context = SpringApplication.run(StoreApplication.class, args);
+//        var orderService = context.getBean(OrderService.class);
+//        var orderService2 = context.getBean(OrderService.class);
+// //        var orderService = new OrderService(new PayPalPaymentService());
+// //        orderService.setPaymentService(new PayPalPaymentService());
+//        orderService.placeOrder();
+//
+//        var manager = context.getBean(NotificationManager.class);
+//        manager.sendNotification("Test message");
+//
+//        context.getBean(HeavyResource.class);
+//
+//        context.close();
 
     }
 }
