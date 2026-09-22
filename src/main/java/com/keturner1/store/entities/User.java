@@ -13,7 +13,6 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
 @Entity
 @Table(name = "users")
 public class User {
@@ -22,16 +21,16 @@ public class User {
     @Column(name = "id")
     private Long id;
 
-    @Column(nullable = false, name = "name")
+    @Column(name = "name")
     private String name;
 
-    @Column(nullable = false, name = "email")
+    @Column(name = "email")
     private String email;
 
-    @Column(nullable = false, name = "password")
+    @Column(name = "password")
     private String password;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
     @Builder.Default
     private List<Address> addresses = new ArrayList<>();
 
@@ -60,7 +59,7 @@ public class User {
         tag.getUsers().add(this);
     }
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Profile profile;
 
     @ManyToMany
@@ -70,5 +69,9 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     private Set<Product> wishList = new HashSet<>();
+
+    public void addWishList(Product product) {
+        this.wishList.add(product);
+    }
 
 }

@@ -11,7 +11,6 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Table(name = "profiles")
 public class Profile {
 
@@ -32,9 +31,8 @@ public class Profile {
     @Column(name = "loyalty_points")
     private Long loyaltyPoints;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
     @MapsId
-    @ToString.Exclude
     private User user;
 }

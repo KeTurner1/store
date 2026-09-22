@@ -8,7 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
 @Entity
 @Table(name = "addresses")
 public class Address {
@@ -32,10 +31,12 @@ public class Address {
     @Column(name = "city")
     private String city;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    @ToString.Exclude
-    private User user;
+    private Long getUser() {
+        return this.user_id;
+    }
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    public User user;
 
 }
